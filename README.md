@@ -7,18 +7,6 @@
   <img src="https://img.shields.io/badge/Status-Completed-brightgreen?style=for-the-badge">
 </p>
 
-
-<p align="center">
-  <a href="https://github.com/RafikShaik07/mental-health-prediction">
-    <img src="https://img.shields.io/github/stars/RafikShaik07/mental-health-prediction?style=for-the-badge">
-  </a>
-  <img src="https://img.shields.io/github/forks/RafikShaik07/mental-health-prediction?style=for-the-badge">
-  <img src="https://img.shields.io/github/license/RafikShaik07/mental-health-prediction?style=for-the-badge">
-  <img src="https://img.shields.io/badge/Made%20With-Python-blue?style=for-the-badge&logo=python">
-</p>
-
----
-
 ## 📌 Overview
 
 The **Mental Health Disorder Prediction System** is an advanced Machine Learning project designed to analyze mental health datasets and predict potential disorders using intelligent algorithms.
