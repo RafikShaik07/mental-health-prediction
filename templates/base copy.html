@@ -1,0 +1,142 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <title>depression detection</title>
+    <style>
+body {
+    background-image: url("");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+/* Navbar styles */
+.navbar-custom {
+    background: linear-gradient(90deg, rgba(0,0,0,0.85) 60%, #3a2555 100%);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+    height: 120px;
+    border-radius: 0 0 24px 24px;
+}
+.navbar-brand {
+    color: #FFD700 !important;
+    font-weight: 800;
+    letter-spacing: 1px;
+    font-size: 1.6rem;
+    text-shadow: 2px 2px 14px rgba(0,0,0,0.7);
+}
+.navbar-custom .nav-link {
+    color: #f6f6f9 !important;
+    margin: 0 10px;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-size: 1.1rem;
+    font-weight: 500;
+    transition: color 0.3s, border-bottom 0.3s, background 0.3s;
+}
+.navbar-custom .nav-link:hover, .navbar-custom .nav-link:focus {
+    color: #FFD700 !important;
+    background: rgba(255,255,255,0.07);
+    border-bottom: 2px solid #FFD700;
+    box-shadow: 0 2px 12px #FFD70014;
+}
+
+/* Content card */
+.content {
+    padding: 60px 0 30px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+}
+.form-container {
+    background: rgba(252, 252, 255, 0.96);
+    color: #242247;
+    padding: 36px 32px;
+    border-radius: 14px;
+    max-width: 750px;
+    width: 90%;
+    margin: 40px auto 0 auto;
+    box-shadow: 0 12px 40px 0 rgba(80,60,180,0.09), 0 2px 12px rgba(0,0,0,0.09);
+    border-top: 4px solid #FFD700;
+    animation: fadeIn 0.9s cubic-bezier(.47,1.64,.41,.8);
+}
+
+@keyframes fadeIn {
+    0% { opacity: 0; transform: translateY(40px);}
+    100% { opacity: 1; transform: translateY(0);}
+}
+
+h1, h2 {
+    text-shadow: 3px 5px 22px rgba(0,0,0,0.62);
+    font-family: 'Poppins', Arial, sans-serif;
+}
+
+.btn-primary {
+    padding: 0.7rem 2.5rem;
+    background: linear-gradient(90deg, #694ff3, #4395ca);
+    box-shadow: 0 2px 12px #28237770;
+    border: none;
+    border-radius: 7px;
+    font-weight: bold;
+    letter-spacing: 0.02em;
+    font-size: 1.1rem;
+    color: #FFF;
+    transition: background 0.3s, transform 0.12s;
+}
+.btn-primary:hover, .btn-primary:focus {
+    background: linear-gradient(90deg, #3f8feb, #f2be34);
+    color: #242247;
+    transform: scale(1.045) translateY(-2px);
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+    .form-container {
+        padding: 16px 6px;
+    }
+    .navbar-brand {
+        font-size: 1.28rem;
+    }
+}
+
+    </style>
+</head>
+<body>
+
+<!-- Horizontal Navbar -->
+<nav class="navbar navbar-expand-lg navbar-custom">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{% url 'index' %}">Mental Health safety & depression detection in media text data</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" 
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon" style="color:white;"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item"><a class="nav-link" href="{% url 'index' %}">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'UserLogin' %}">User Login</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'AdminLoginCheck' %}">Admin Login</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'UserRegisterForm' %}">Create Account</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Page Content -->
+<div class="content">
+    {% block contents %}
+    {% endblock %}
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>

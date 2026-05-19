@@ -1,0 +1,271 @@
+{% extends 'users/userbase.html' %}
+{% load static %}
+{% block contents %}
+
+<style>
+    /* Background & container */
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-image: url("{% static 'image.png' %}");
+        background-size: cover;      
+        background-repeat: no-repeat; 
+        background-position: center; 
+        height:1300px;
+    }
+
+    .prediction-container {
+        max-width: 900px;
+        margin: 50px auto;
+        padding: 30px;
+        background: #ffffff;
+        border-radius: 15px;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    }
+
+    h2.section-title {
+        font-weight: 700;
+        text-align: center;
+        margin-bottom: 30px;
+        color: #343a40;
+        letter-spacing: 1px;
+    }
+
+    form.card {
+        background: #f1f3f5;
+        padding: 40px 30px;
+        border-radius: 12px;
+        transition: all 0.3s ease;
+    }
+
+    form.card:hover {
+        box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        transform: translateY(-5px);
+    }
+
+    .form-label {
+        font-weight: 600;
+        color: #495057;
+        display: block;
+        margin-bottom: 6px;
+    }
+
+    input.form-control {
+        width: 100%;
+        border-radius: 10px;
+        padding: 10px 14px;
+        font-size: 1rem;
+        border: 2px solid #ced4da;
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        box-sizing: border-box;
+    }
+
+    input.form-control:focus {
+        border-color: #007bff;
+        box-shadow: 0 0 8px rgba(0,123,255,0.4);
+        outline: none;
+    }
+
+    .warning {
+        color: red;
+        font-size: 0.9rem;
+        display: none;
+        margin-top: 4px;
+    }
+
+    button.btn-primary {
+        width: 100%;
+        border-radius: 12px;
+        padding: 15px;
+        font-size: 1.2rem;
+        font-weight: 600;
+        background: linear-gradient(45deg, #007bff, #6610f2);
+        border: none;
+        color: white;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 6px 20px rgba(102,16,242,0.4);
+    }
+
+    button.btn-primary:hover {
+        background: linear-gradient(45deg, #6610f2, #007bff);
+        transform: translateY(-3px);
+        box-shadow: 0 10px 30px rgba(102,16,242,0.6);
+    }
+
+    /* Layout */
+    .row.g-3 {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem 2rem;
+    }
+
+    .col-md-6 {
+        flex: 1 1 calc(50% - 2rem);
+        min-width: 280px;
+    }
+
+    /* Prediction Result */
+    .result-card {
+        background: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 100%);
+        border-radius: 15px;
+        padding: 30px;
+        margin-top: 40px;
+        text-align: center;
+        box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+        transition: transform 0.3s ease;
+    }
+
+    .result-card:hover {
+        transform: scale(1.04);
+    }
+
+    .result-card h4 {
+        font-weight: 700;
+        color: #007bff;
+        margin-bottom: 20px;
+        font-size: 1.8rem;
+    }
+
+    .result-card p {
+        font-size: 2rem;
+        font-weight: bold;
+        color: #1c7ed6;
+        margin: 0;
+    }
+
+    a.btn-retry {
+        display: inline-block;
+        margin-top: 35px;
+        color: white;
+        border-radius: 14px;
+        padding: 12px 30px;
+        font-weight: 700;
+        font-size: 1.1rem;
+        text-decoration: none;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+
+    a.btn-retry:hover {
+        transform: translateY(-3px);
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 600px) {
+        .col-md-6 {
+            flex-basis: 100%;
+        }
+    }
+</style>
+
+<div class="prediction-container">
+    <h2 class="section-title">Depression State Prediction</h2>
+
+    <!-- Form Section -->
+    <form method="POST" class="card shadow-lg" novalidate>
+        {% csrf_token %}
+
+        <div class="row g-3">
+            <p>1:Never ,2:Always ,3:Often ,4:Rarely ,5:Sometimes ,6:Not at all</p>
+            <div class="col-md-6">
+                <label class="form-label" for="Sleep">Sleep(1-6)</label>
+                <input type="number" id="Sleep" name="Sleep" step="1" max="6" min="1" required class="form-control" oninput="validateRange(this)">
+                <div class="warning">Enter a number between 1 and 6</div>
+            </div>
+            <div class="col-md-6">
+                <label class="form-label" for="Appetite">Appetite(1-6)</label>
+                <input type="number" id="Appetite" name="Appetite" step="1" max="6" min="1" required class="form-control" oninput="validateRange(this)">
+                <div class="warning">Enter a number between 1 and 6</div>
+            </div>
+        </div>
+
+        <div class="row g-3 mt-2">
+            <div class="col-md-6">
+                <label class="form-label" for="Interest">Interest(1-6)</label>
+                <input type="number" id="Interest" name="Interest" step="1" max="6" min="1" required class="form-control" oninput="validateRange(this)">
+                <div class="warning">Enter a number between 1 and 6</div>
+            </div>
+            <div class="col-md-6">
+                <label class="form-label" for="Fatigue">Fatigue(1-6)</label>
+                <input type="number" id="Fatigue" name="Fatigue" step="1" max="6" min="1" required class="form-control" oninput="validateRange(this)">
+                <div class="warning">Enter a number between 1 and 6</div>
+            </div>
+        </div>
+
+        <div class="row g-3 mt-2">
+            <div class="col-md-6">
+                <label class="form-label" for="Worthlessness">Worthlessness(1-6)</label>
+                <input type="number" id="Worthlessness" name="Worthlessness" step="1" max="6" min="1" required class="form-control" oninput="validateRange(this)">
+                <div class="warning">Enter a number between 1 and 6</div>
+            </div>
+            <div class="col-md-6">
+                <label class="form-label" for="Concentration">Concentration(1-6)</label>
+                <input type="number" id="Concentration" name="Concentration" step="1" max="6" min="1" required class="form-control" oninput="validateRange(this)">
+                <div class="warning">Enter a number between 1 and 6</div>
+            </div>
+        </div>
+
+        <div class="row g-3 mt-2">
+            <div class="col-md-6">
+                <label class="form-label" for="Agitation">Agitation(1-6)</label>
+                <input type="number" id="Agitation" name="Agitation" step="1" max="6" min="1" required class="form-control" oninput="validateRange(this)">
+                <div class="warning">Enter a number between 1 and 6</div>
+            </div>
+            <div class="col-md-6">
+                <label class="form-label" for="Suicidal_Ideation">Suicidal Ideation(1-6)</label>
+                <input type="number" id="Suicidal_Ideation" name="Suicidal_Ideation" step="1" max="6" min="1" required class="form-control" oninput="validateRange(this)">
+                <div class="warning">Enter a number between 1 and 6</div>
+            </div>
+        </div>
+
+        <div class="row g-3 mt-2">
+            <div class="col-md-6">
+                <label class="form-label" for="Sleep_Disturbance">Sleep Disturbance(1-6)</label>
+                <input type="number" id="Sleep_Disturbance" name="Sleep_Disturbance" step="1" max="6" min="1" required class="form-control" oninput="validateRange(this)">
+                <div class="warning">Enter a number between 1 and 6</div>
+            </div>
+        </div>
+
+        <div class="row g-3 mt-2">
+            <div class="col-md-6">
+                <label class="form-label" for="Panic_Attacks">Panic Attacks(1-6)</label>
+                <input type="number" id="Panic_Attacks" name="Panic_Attacks" step="1" max="6" min="1" required class="form-control" oninput="validateRange(this)">
+                <div class="warning">Enter a number between 1 and 6</div>
+            </div>
+        </div>
+
+        <div class="row g-3 mt-2">
+            <div class="col-md-6">
+                <label class="form-label" for="Restlessness">Restlessness(1-6)</label>
+                <input type="number" id="Restlessness" name="Restlessness" step="1" max="6" min="1" required class="form-control" oninput="validateRange(this)">
+                <div class="warning">Enter a number between 1 and 6</div>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary mt-4">Predict</button>
+    </form>
+
+    <!-- Prediction Result -->
+     {% if prediction %}
+        <div class="result-card">
+            <h4>Prediction Result</h4>
+            <p>{{ prediction }}</p>
+        </div>
+        <a href="{% url 'prediction' %}" class="btn-retry">Try Again</a>
+    {% elif error %}
+        <p class="text-center mt-3 text-danger">{{ error }}</p>
+    {% endif %}
+</div>
+
+<script>
+function validateRange(input) {
+    const value = parseInt(input.value);
+    const warning = input.nextElementSibling;
+    if (value < 1 || value > 6 || isNaN(value)) {
+        warning.style.display = 'block';
+    } else {
+        warning.style.display = 'none';
+    }
+}
+</script>
+
+{% endblock %}

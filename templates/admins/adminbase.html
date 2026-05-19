@@ -1,0 +1,176 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Depression Detection - {% block title %}{% endblock %}</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <style>
+        /* Define Color Palette using CSS Variables */
+        :root {
+            --header-start: #5a7d9f; /* A darker, professional blue */
+            --header-end: #8eb079;   /* A calming, soft green */
+            --nav-bg: #e3e6f0;       /* Very light cool gray for contrast */
+            --nav-text: #2c3e50;     /* Dark text for readability */
+            --nav-hover: #4e6c98;    /* Dark blue for hover state */
+            --footer-bg: #2c3e50;
+            --main-bg: #f7f9fc;      /* Light, off-white background */
+            --active-color: #6389ae; /* Header start color for active links */
+        }
+
+        /* Base Body and Layout */
+        body {
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--main-bg);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh; /* Ensure full viewport height */
+        }
+
+        /* --- Header Styling --- */
+        header {
+            background: linear-gradient(135deg, var(--header-start), var(--header-end));
+            color: #fff;
+            padding: 25px 20px;
+            text-align: center;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 1.8rem; /* Slightly smaller for better flow */
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            line-height: 1.4;
+            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.4);
+        }
+        
+        /* --- Navigation Styling --- */
+        nav {
+            background-color: var(--nav-bg);
+            padding: 15px 0;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            position: sticky; /* Sticky navigation for better UX */
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        nav ul li {
+            margin: 5px 15px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: var(--nav-text);
+            font-size: 1rem;
+            font-weight: 600;
+            padding: 10px 20px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            transition: background 0.3s ease, color 0.3s ease, transform 0.2s;
+        }
+
+        nav ul li a i {
+            margin-right: 8px;
+        }
+
+        nav ul li a:hover,
+        nav ul li.active a {
+            background-color: var(--active-color);
+            color: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+        }
+
+        /* --- Main Content Area --- */
+        .main-content {
+            flex-grow: 1; /* Pushes the footer to the bottom */
+            padding: 30px 20px;
+            width: 100%;
+            max-width: 1200px; /* Center content nicely */
+            margin: 0 auto;
+        }
+
+        /* --- Footer Styling --- */
+        footer {
+            background-color: var(--footer-bg);
+            color: #fff;
+            text-align: center;
+            padding: 15px 0;
+            box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1);
+            margin-top: auto; /* Pushes footer down */
+        }
+
+        footer p {
+            margin: 0;
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.4rem;
+            }
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+            nav ul li {
+                margin: 5px 0;
+                width: 80%;
+                text-align: center;
+            }
+        }
+    </style>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+<header>
+    <h1>Mental Health Safety & Depression Detection in Media<br> Text Data</h1>
+</header>
+
+<nav>
+    <ul>
+        <li {% if request.path == '/adminhome/' %}class="active"{% endif %}><a href="{% url 'adminhome' %}"><i class="fas fa-chart-line"></i> Home</a></li>
+        <li {% if request.path == '/registerusersview/' %}class="active"{% endif %}><a href="{% url 'RegisterUsersView'%}"><i class="fas fa-users"></i> User Details</a></li>
+        <li {% if request.path == '/viewdataset/' %}class="active"{% endif %}><a href="{% url 'ViewDataset' %}"><i class="fas fa-database"></i> Dataset</a></li>
+        <li><a href="{% url 'upload_dataset_for_algo' 'LR' %}"><i class="fas fa-dumbbell"></i>LR</a></li>
+        <li><a href="{% url 'upload_dataset_for_algo' 'RF' %}"><i class="fas fa-dumbbell"></i>RF</a></li>
+        <li><a href="{% url 'upload_dataset_for_algo' 'KNN' %}"><i class="fas fa-dumbbell"></i>KNN</a></li>
+        <li><a href="{% url 'upload_dataset_for_algo' 'SVM' %}"><i class="fas fa-dumbbell"></i>SVM</a></li>
+
+         <li {% if request.path == '/compare_models/' %}class="active"{% endif %}><a href="{% url 'compare_models' %}"><i class="fas fa-dumbbell"></i>compare_models</a></li>
+        <li {% if request.path == '/' %}class="active"{% endif %}><a href="{% url 'index' %}"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+
+    </ul>
+</nav>
+
+<div class="main-content">
+    {% block contents %}
+    {% endblock %}
+</div>
+
+<footer>
+    <p>&copy; 2025 Mental Health Safety & Detection System. All rights reserved.</p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,330 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <title>Admin Login - Depression Detection</title>
+
+    <style>
+        /* --- General and Typography --- */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f4f6f9; /* Light, professional background */
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background-image: url("{% static 'depression.png' %}");
+        }
+
+        /* --- Navbar Styles (Requested Style) --- */
+        .navbar-custom {
+            /* Using the requested dark/gradient style */
+            background: linear-gradient(90deg, rgba(0,0,0,0.85) 60%, #3a2555 100%);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+            height: 120px; /* Taller height */
+            border-radius: 0 0 24px 24px;
+        }
+        
+        .navbar-custom .container-fluid {
+             max-width: 1200px;
+        }
+
+        .navbar-brand {
+            color: #FFD700 !important; /* Gold accent */
+            font-weight: 800;
+            letter-spacing: 1px;
+            font-size: 1.6rem;
+            text-shadow: 2px 2px 14px rgba(0,0,0,0.7);
+            transition: color 0.3s;
+        }
+        .navbar-brand:hover {
+            color: #ffc107 !important; /* Slightly brighter gold on hover */
+        }
+
+        .navbar-custom .nav-link {
+            color: #f6f6f9 !important;
+            margin: 0 10px;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-size: 1.1rem;
+            font-weight: 500;
+            transition: color 0.3s, border-bottom 0.3s, background 0.3s;
+        }
+        .navbar-custom .nav-link:hover, .navbar-custom .nav-link:focus {
+            color: #FFD700 !important;
+            background: rgba(255,255,255,0.07);
+            border-bottom: 2px solid #FFD700;
+            box-shadow: 0 2px 12px #FFD70014;
+        }
+        /* Active link state for Admin Login */
+        .navbar-custom .nav-item.active .nav-link {
+            color: #FFD700 !important;
+            border-bottom: 2px solid #FFD700;
+        }
+
+
+        /* --- Main Content and Login Card Styles (Refined Professional Look) --- */
+        .main-content {
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            /* Added margin-top to account for the large navbar height */
+            margin-top: -30px; 
+            z-index: 10; 
+        }
+
+        .login-card {
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08), 0 2px 8px rgba(0, 0, 0, 0.05);
+            padding: 40px;
+            max-width: 420px;
+            width: 100%;
+            color: #2c3e50;
+            border-left: 4px solid #FFD700; /* Gold accent line matching the header */
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .login-card h1 {
+            font-weight: 700;
+            font-size: 1.8rem;
+            color: #2c3e50;
+            margin-bottom: 70px;
+            text-align: center;
+        }
+
+        .form-group label {
+            font-weight: 500;
+            margin-bottom: 5px;
+            color: #5d6d7e;
+            font-size: 0.95rem;
+        }
+
+        .input-wrapper {
+            display: flex;
+            align-items: center;
+            background: #f8f9fa;
+            border-radius: 6px;
+            padding: 8px 12px;
+            border: 1px solid #e9ecef;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .input-wrapper:focus-within {
+            border-color: #FFD700;
+            box-shadow: 0 0 0 0.2rem rgba(255, 215, 0, 0.25);
+        }
+
+        .input-wrapper i {
+            margin-right: 12px;
+            color: #FFD700; /* Gold icon color */
+            font-size: 1.1rem;
+        }
+
+        .form-control {
+            border: none;
+            box-shadow: none;
+            font-size: 1rem;
+            padding: 0;
+            background: transparent;
+            width: 100%;
+        }
+        .form-control:focus {
+            box-shadow: none;
+            background: transparent;
+        }
+
+        /* --- Button Styles --- */
+        .btn-primary {
+            /* Custom gradient button based on requested style, but slightly more refined */
+            background: linear-gradient(90deg, #694ff3, #4395ca);
+            border-color: #694ff3;
+            padding: 0.7rem 1.8rem;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: background 0.3s, transform 0.1s, box-shadow 0.3s;
+        }
+        .btn-primary:hover, .btn-primary:focus {
+            background: linear-gradient(90deg, #5c42e0, #3884b2);
+            border-color: #5c42e0;
+            transform: scale(1.02);
+            box-shadow: 0 4px 10px rgba(70, 90, 200, 0.3);
+        }
+
+        .btn-secondary {
+            /* Minimal secondary button */
+            margin-left: 15px;
+            padding: 0.7rem 1.8rem;
+            background: #ecf0f1;
+            border: 1px solid #bdc3c7;
+            border-radius: 6px;
+            font-weight: 500;
+            color: #3a2555;
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+        .btn-secondary:hover, .btn-secondary:focus {
+            background-color: #bdc3c7;
+            border-color: #95a5a6;
+            color: #2c3e50;
+        }
+
+        /* --- Message Styles --- */
+        .message {
+            margin: 20px 0 10px 0;
+            padding: 15px;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+        .message.error {
+            background: #fef1f3;
+            color: #e74c3c;
+            border: 1px solid #e74c3c;
+        }
+        .message.success {
+            background: #e9f8f4;
+            color: #27ae60;
+            border: 1px solid #27ae60;
+        }
+
+        .forgot {
+            margin-top: 25px;
+            text-align: center;
+        }
+        .forgot a {
+            color: #FFD700;
+            font-size: 0.95rem;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .forgot a:hover {
+            color: #ffc107;
+            text-decoration: underline;
+        }
+
+        /* --- Footer --- */
+        .footer-custom {
+            padding: 15px 0;
+            background-color: #ffffff;
+            border-top: 1px solid #e9ecef;
+            text-align: center;
+            font-size: 0.85rem;
+            color: #7f8c8d;
+            margin-top: auto; /* Push footer to the bottom */
+        }
+
+        /* --- Responsive Styles --- */
+        @media (max-width: 992px) {
+            .navbar-custom {
+                height: auto; /* Allow height to collapse on mobile */
+                border-radius: 0;
+            }
+            .navbar-brand {
+                font-size: 1.4rem;
+            }
+            .navbar-custom .nav-link {
+                margin: 5px 0;
+                border-bottom: none;
+            }
+            .navbar-custom .nav-link:hover {
+                border-bottom: none;
+            }
+            .main-content {
+                margin-top: 20px; /* Adjust top margin for smaller navbar */
+            }
+        }
+        @media (max-width: 576px) {
+            .login-card {
+                padding: 30px 20px;
+                margin: 40px auto;
+            }
+            .login-card h1 {
+                font-size: 1.5rem;
+                margin-bottom: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{% url 'index' %}">Mental Health safety & depression detection in media text data</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" 
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item"><a class="nav-link" href="{% url 'index' %}">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'UserLogin' %}">User Login</a></li>
+                <li class="nav-item active"><a class="nav-link" href="{% url 'AdminLoginCheck' %}">Admin Login</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'UserRegisterForm' %}">Create Account</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="main-content">
+    <div class="login-card">
+        <h1><i class="fas fa-user-shield"></i> Administrator Access</h1>
+
+        <form action="AdminLogincheck" method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="loginid">Login ID</label>
+                <div class="input-wrapper">
+                    <i class="fas fa-user"></i>
+                    <input type="text" id="loginid" name="loginid" class="form-control" placeholder="Enter Admin ID" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="pswd">Password</label>
+                <div class="input-wrapper">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="pswd" name="pswd" class="form-control" placeholder="Enter Password" required>
+                </div>
+            </div>
+            
+            <div class="d-flex justify-content-start mt-4">
+                <button type="submit" class="btn btn-primary"><i class="fas fa-sign-in-alt"></i> Sign In</button>
+                <button type="reset" class="btn btn-secondary"><i class="fas fa-undo-alt"></i> Reset</button>
+            </div>
+        </form>
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="message {% if message.tags == 'error' %}error{% else %}success{% endif %}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <div class="forgot">
+            <a href="#" onclick="alert('For security, please contact the IT Administrator to reset your password.')">Forgot Password?</a>
+        </div>
+    </div>
+</div>
+
+<footer class="footer-custom">
+    &copy; 2025 Mental Health Safety & Detection. All rights reserved.
+</footer>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>

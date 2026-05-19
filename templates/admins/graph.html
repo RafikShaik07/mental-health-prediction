@@ -1,0 +1,105 @@
+{% extends 'admins/adminbase.html' %}
+{% block contents %}
+{% load static %}
+
+<style>
+    body {
+        background-image: url("{% static 'images/mental-health.jpg' %}");
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        color: #fff;
+    }
+
+    .container { 
+        border-radius: 15px;
+        padding: 30px;
+        margin-top: 40px;
+    }
+
+    h2 {
+        font-weight: bold;
+        color: #ffd700;
+        text-shadow: 2px 2px 5px #000;
+    }
+
+    h4 {
+        font-weight: 600;
+        color: #ffcc00;
+    }
+
+    .card {
+        background: rgba(255, 255, 255, 0.9);
+        border: none;
+        transition: transform 0.3s ease-in-out;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+    }
+
+    table {
+        background: white;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    th {
+        background: #6c63ff;
+        color: white;
+        text-align: center;
+        padding: 12px;
+    }
+
+    td {
+        text-align: center;
+        padding: 10px;
+    }
+
+    img {
+        border-radius: 10px;
+        border: 3px solid #fff;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+    }
+
+    .btn {
+        font-weight: bold;
+        border-radius: 8px;
+        padding: 10px 20px;
+        margin: 5px;
+    }
+
+    .btn-success {
+        background: linear-gradient(90deg, #28a745, #218838);
+        border: none;
+    }
+
+    .btn-primary {
+        background: linear-gradient(90deg, #007bff, #0056b3);
+        border: none;
+    }
+
+    .btn:hover {
+        opacity: 0.9;
+        transform: scale(1.05);
+        transition: 0.2s;
+    }
+</style>
+
+<div class="container mt-5">
+    <h2 class="text-center mb-4">📊 {{ algorithm }} - Accuracy Result</h2>
+
+    {% if accuracy %}
+    <h4 class="text-center text-warning">✅ Accuracy: {{ accuracy }}%</h4>
+    {% endif %}
+
+    
+    <div class="card shadow p-4 text-center" style="border-radius: 12px;">
+        <h4 class="mb-3 text-center">Accuracy Graph</h4>
+        <img src="{{ graph_url }}" alt="Model Comparison Graph" class="img-fluid" style="max-height: 400px;">
+    </div>
+
+</div>
+
+{% endblock %}

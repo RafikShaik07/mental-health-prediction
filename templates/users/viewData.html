@@ -1,0 +1,113 @@
+{%extends 'admins/adminbase.html'%}
+{%load static %}
+{%block contents%}
+
+<style>
+/* --- General Page Structure and Typography --- */
+section.content {
+    /* Use a standard, clean font for professionalism */
+    font-family: 'Roboto', 'Montserrat', Arial, sans-serif;
+    padding: 30px;
+    max-width: 1200px; /* Allow for wider data display */
+    margin: 40px auto;
+    background: #ffffff; /* Clean white background for the module */
+    border-radius: 12px;
+    /* Subtle, modern shadow */
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08), 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+h2 {
+    font-weight: 700;
+    font-size: 1.8rem;
+    color: #2c3e50; /* Dark, professional charcoal color */
+    margin-bottom: 25px;
+    padding-bottom: 8px;
+    border-bottom: 3px solid #3498db; /* Professional blue accent underline */
+    display: inline-block;
+}
+
+p {
+    font-size: 1rem;
+    color: #7f8c8d; /* Muted gray for body text */
+    margin-bottom: 25px;
+}
+
+/* --- Professional Data Table Wrapper --- */
+/* This ensures the table can scroll horizontally if it's too wide */
+.data-table-wrapper {
+    overflow-x: auto; 
+    border: 1px solid #e0e0e0; /* Light gray border around the entire table module */
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+/* --- Core Table Styling --- */
+/* Target the <table> element directly or ensure {{data|safe}} uses a class like 'data-table' */
+table {
+    width: 100%;
+    border-collapse: separate; 
+    border-spacing: 0;
+    margin: 0;
+    min-width: 800px; /* Ensures table is wide enough for data */
+}
+
+table th, table td {
+    padding: 15px 20px; /* Increased padding for great readability */
+    text-align: left;
+    border-bottom: 1px solid #f0f0f0; /* Very light separation line */
+}
+
+/* Table Header Styles */
+table th {
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    color: #ffffff; 
+    background-color: #34495e; /* Deep professional charcoal/blue for header */
+    letter-spacing: 0.05em;
+    border-bottom: 2px solid #2c3e50;
+    white-space: nowrap; /* Prevents column titles from wrapping */
+}
+
+/* Remove border on the last row */
+table tr:last-child td {
+    border-bottom: none;
+}
+
+/* Table Body Stripes and Hover */
+table tr {
+    transition: background-color 0.2s ease-in-out;
+}
+
+table tr:nth-child(even) {
+    background-color: #fcfcfc; /* Almost white stripe */
+}
+table tr:nth-child(odd) {
+    background-color: #ffffff; 
+}
+
+table tr:hover {
+    background-color: #ebf5ff; /* Soft blue hover highlight */
+    color: #2c3e50;
+    /* Optional: subtle shadow effect on hover */
+    box-shadow: 0 0 10px rgba(52, 152, 219, 0.1); 
+}
+
+/* Style for the first and last cells to visually contain the table */
+.data-table-wrapper table tr th:first-child { border-top-left-radius: 8px; }
+.data-table-wrapper table tr th:last-child { border-top-right-radius: 8px; }
+
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+
+<section class="content">
+    <h2>View Dataset</h2>
+    <p>
+        This structured table displays the complete dataset used for the depression detection model training and evaluation. Data integrity and consistency are key to robust model performance.
+    </p>
+    
+    <div class="data-table-wrapper">
+        {{data|safe}}
+    </div>
+</section>
+{%endblock%}

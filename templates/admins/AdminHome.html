@@ -1,0 +1,306 @@
+{% extends 'admins/adminbase.html' %}
+{% load static %}
+{% block contents %}
+
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
+<style>
+    /* --- COLOR PALETTE --- */
+    :root {
+        --color-bg-deep: #0d172a;      /* Deep Navy/Black */
+        --color-accent-aqua: #00eaff;  /* Electric Aqua/Cyan */
+        --color-accent-magenta: #ff4d94; /* Neon Pink/Magenta (Severe) */
+        --color-accent-mild: #ffcb6b;    /* Soft Orange/Yellow (Mild) */
+        --color-accent-low: #50fa7b;     /* Bright Green (Low) */
+        
+        --color-card-surface: rgba(255, 255, 255, 0.05); /* Transparent Glass */
+        --color-text-light: #e0f7fa;   /* Off-white light cyan */
+        --color-border-glow: rgba(0, 234, 255, 0.3);
+        --shadow-neon: 0 0 15px rgba(0, 234, 255, 0.6);
+        --shadow-deep: 0 10px 30px rgba(0, 0, 0, 0.7);
+    }
+
+    /* --- General Body Style (Dark Theme) --- */
+    body {
+        margin: 0;
+        font-family: 'Inter', sans-serif;
+        background-color: var(--color-bg-deep); 
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        color: var(--color-text-light);
+    }
+    
+    /* --- Full-Width Header Container (Keeping the User's provided structure) --- */
+    .full-width-header-area {
+        width: 100%;
+        position: sticky;
+        top: 0;
+        z-index: 20; 
+        padding: 0;
+        margin: 0; 
+        background-color: #f4f6f9; /* Retained background color for the overall wrapper */
+    }
+
+    /* --- Main Title Bar Styles (Inferred from the Image) --- */
+    .main-title-bar {
+        width: 100%;
+        padding: 25px 0;
+        margin: 0 auto;
+        color: white;
+        text-align: center;
+        font-size: 1.6rem;
+        font-weight: 700;
+        line-height: 1.4;
+        letter-spacing: 0.05em;
+        /* Using a more vibrant gradient for the title bar */
+        background: linear-gradient(90deg, #1b3a5b 0%, #112d4e 100%);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        border-bottom: 2px solid var(--color-accent-aqua);
+    }
+    
+    .main-title-bar span {
+        font-family: 'Orbitron', sans-serif; /* High-tech font for the title */
+        color: var(--color-accent-aqua);
+        text-shadow: 0 0 8px var(--color-accent-aqua);
+    }
+
+    /* --- Navigation Menu Container Styles --- */
+    .nav-menu-bar {
+        width: 100%;
+        padding: 10px 0;
+        background-color: #1a2a40; /* Darker bar to match theme */
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        margin: 0;
+        border-bottom: 1px solid rgba(0, 234, 255, 0.1);
+    }
+
+    .nav-menu-bar .nav-list {
+        display: flex;
+        justify-content: center;
+        list-style: none;
+        margin: 0;
+        padding: 0 20px;
+    }
+
+    .nav-menu-bar .nav-link {
+        color: #9cb1cc; /* Faded color */
+    }
+
+    .nav-menu-bar .nav-link:hover {
+        background-color: #112d4e;
+        color: var(--color-accent-aqua);
+    }
+
+    /* --- Main Dashboard Wrapper --- */
+    .content-wrapper {
+        padding: 40px 20px; 
+        flex-grow: 1;
+        width: 100%;
+    }
+
+    /* --- Metrics Card Styling --- */
+    .metric-card {
+        background: var(--color-card-surface);
+        backdrop-filter: blur(5px);
+        border-radius: 12px;
+        padding: 25px;
+        box-shadow: var(--shadow-deep);
+        border: 1px solid var(--color-border-glow);
+        transition: transform 0.3s, box-shadow 0.3s;
+        min-height: 150px;
+    }
+
+    .metric-card:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--shadow-deep), var(--shadow-neon);
+    }
+    
+    .metric-card i {
+        font-size: 2.5rem;
+        margin-bottom: 15px;
+        display: block;
+        text-shadow: 0 0 5px currentColor;
+    }
+
+    /* --- Risk Level Colors --- */
+    .metric-card .icon-aqua { color: var(--color-accent-aqua); }
+    .metric-card .icon-severe { color: var(--color-accent-magenta); }
+    .metric-card .icon-mild { color: var(--color-accent-mild); } 
+    .metric-card .icon-low { color: var(--color-accent-low); }
+
+    .metric-card .metric-value {
+        font-size: 2.8rem;
+        font-family: 'Orbitron', sans-serif;
+        font-weight: 700;
+        line-height: 1;
+        margin-bottom: 5px;
+    }
+
+    .metric-card .metric-label {
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: rgba(224, 247, 250, 0.7);
+    }
+
+    /* --- Chart Container Styling --- */
+    .chart-container {
+        background: var(--color-card-surface);
+        backdrop-filter: blur(5px);
+        border-radius: 12px;
+        padding: 30px;
+        margin-top: 30px;
+        box-shadow: var(--shadow-deep);
+        border: 1px solid var(--color-border-glow);
+        min-height: 350px;
+        text-align: center;
+    }
+    
+    .chart-container h3 {
+        font-family: 'Orbitron', sans-serif;
+        color: var(--color-accent-aqua);
+        font-size: 1.5rem;
+        margin-bottom: 25px;
+        text-shadow: 0 0 5px rgba(0, 234, 255, 0.4);
+    }
+    
+    .chart-placeholder {
+        padding: 40px 20px;
+        border: 2px dashed rgba(224, 247, 250, 0.3);
+        border-radius: 8px;
+        color: rgba(224, 247, 250, 0.5);
+        font-style: italic;
+    }
+
+    /* Responsive adjustment for 4-column layout on smaller desktops */
+    @media (min-width: 992px) {
+        .col-lg-3-custom {
+            flex: 0 0 25%;
+            max-width: 25%;
+        }
+    }
+
+</style>
+
+<!-- Full-Width Header Block -->
+<div class="full-width-header-area">
+    <!-- Main Title Bar (Full Width) -->
+    <div class="main-title-bar">
+        <span>MENTAL HEALTH SAFETY</span> & DEPRESSION DETECTION SYSTEM
+    </div>
+
+    <!-- Navigation Menu Bar (Full Width) -->
+    <div class="nav-menu-bar">
+        <ul class="nav-list">
+            <li class="nav-item">
+                <a href="#" class="nav-link active">
+                    <i class="fas fa-tachometer-alt"></i> Dashboard
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="fas fa-users"></i> User Management
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="fas fa-chart-line"></i> Analysis Reports
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="fas fa-cog"></i> System Settings
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<!-- Main Dashboard Content -->
+<div class="content-wrapper">
+    <div class="container-fluid">
+        
+        <!-- Key Metrics Row (Updated to Four Columns for Low/Mild/Severe Breakdown) -->
+        <div class="row">
+            
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="metric-card text-center">
+                    <i class="icon-aqua fas fa-database"></i>
+                    <div class="metric-value">4,521</div>
+                    <div class="metric-label">Total Submissions Analyzed</div>
+                </div>
+            </div>
+            
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="metric-card text-center">
+                    <i class="icon-severe fas fa-exclamation-triangle"></i>
+                    <div class="metric-value">58</div>
+                    <div class="metric-label">Users Flagged Severe Risk</div>
+                </div>
+            </div>
+            
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="metric-card text-center">
+                    <i class="icon-mild fas fa-bell"></i>
+                    <div class="metric-value">95</div>
+                    <div class="metric-label">Users Flagged Mild Risk</div>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="metric-card text-center">
+                    <i class="icon-low fas fa-check-circle"></i>
+                    <div class="metric-value">3,870</div>
+                    <div class="metric-label">Users Flagged Low Risk</div>
+                </div>
+            </div>
+            
+        </div>
+
+        <!-- Charts and Visualizations Row -->
+        <div class="row">
+            
+            <div class="col-lg-6 mb-4">
+                <div class="chart-container">
+                    <h3>Risk Level Distribution</h3>
+                    <div class="chart-placeholder">
+                        [Placeholder for Donut Chart or Pie Chart]<br>
+                        Shows distribution: Low (3870), Mild (95), Severe (58)
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-6 mb-4">
+                <div class="chart-container">
+                    <h3>Submissions Trend (Last 30 Days)</h3>
+                    <div class="chart-placeholder">
+                        [Placeholder for Line Chart]<br>
+                        Displays daily submission volume and average risk score trend.
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12">
+                <div class="chart-container">
+                    <h3>NLP Keyword Analysis Overview</h3>
+                    <div class="chart-placeholder">
+                        [Placeholder for Word Cloud or Bar Chart]<br>
+                        Top 10 keywords and phrases flagged by the NLP model across all submissions.
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<!-- Note: Chart libraries like Chart.js or D3.js would be loaded here for live charts -->
+
+{% endblock %}

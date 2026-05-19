@@ -1,0 +1,288 @@
+{% extends 'admins/adminbase.html' %}
+{% block contents %}
+{% load static %}
+
+<style>
+    /* 1. Imports and Base Styling */
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800;900&display=swap');
+    
+    /* Keyframes for Animations */
+    @keyframes slideInUp {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    
+    @keyframes glowGold {
+        0% { box-shadow: 0 0 5px #ffd700; }
+        50% { box-shadow: 0 0 20px #ffcc00, 0 0 30px #ffd700; }
+        100% { box-shadow: 0 0 5px #ffd700; }
+    }
+
+    /* Global Styles and Background */
+    body {
+        background-image: url("{% static 'images/mental-health.jpg' %}");
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        font-family: 'Poppins', sans-serif;
+        color: #fff;
+        min-height: 100vh;
+        margin: 0;
+    }
+
+    /* Dark Overlay for better contrast */
+    body::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.8); /* Deeper overlay */
+        z-index: -1;
+    }
+
+    /* 2. Container and Glassmorphism */
+    .container { 
+        border-radius: 25px;
+        padding: 40px;
+        margin-top: 60px;
+        margin-bottom: 60px;
+        /* Glassmorphism Effect */
+        background: rgba(255, 255, 255, 0.05); /* Lighter transparency */
+        backdrop-filter: blur(10px); /* Stronger blur */
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.15); /* Subtler border */
+        box-shadow: 0 10px 40px 0 rgba(0, 0, 0, 0.5); /* Stronger dark shadow */
+        animation: slideInUp 0.8s ease-out;
+    }
+
+    /* 3. Typography */
+    h2 {
+        font-weight: 900;
+        color: #ffd700; /* Primary Gold */
+        text-shadow: 4px 4px 10px rgba(0, 0, 0, 1.0);
+        letter-spacing: 3px;
+        margin-bottom: 2.5rem;
+    }
+
+    h4 {
+        font-weight: 700;
+        color: #1e3c72; /* Deep Blue Heading Color for white cards */
+        text-shadow: none;
+        border-bottom: 3px solid #ffd700; /* Gold underline */
+        display: inline-block;
+        padding-bottom: 8px;
+        margin-bottom: 25px;
+        letter-spacing: 1px;
+    }
+    
+    .card-title-gold {
+        color: #ffaa00; /* Orange-Gold for titles on dark backgrounds */
+    }
+
+    /* 4. Card Styling */
+    .card {
+        background: rgba(255, 255, 255, 0.98);
+        color: #333;
+        border: none;
+        border-radius: 18px; 
+        padding: 30px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4); 
+        transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+
+    .card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 18px 40px rgba(0, 0, 0, 0.6), 0 0 20px #ffd70050; /* Add subtle gold glow on hover */
+    }
+
+    /* Custom Metric Display Card */
+    .accuracy-metric {
+        /* Deep Teal/Dark Blue Gradient - Replaced the blue/purple */
+        background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); 
+        border-radius: 18px;
+        padding: 40px 20px;
+        margin-bottom: 30px;
+        color: #fff;
+        text-align: center;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+    }
+
+    .metric-value {
+        font-size: 5rem; 
+        font-weight: 900; 
+        color: #ffd700; /* Bright Gold Value */
+        text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.9);
+        line-height: 1.1;
+        margin-top: -15px;
+        animation: glowGold 3s infinite alternate;
+    }
+
+    .metric-label {
+        font-size: 1.2rem;
+        font-weight: 600;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        margin-bottom: 0;
+    }
+
+    /* Detailed Metrics Table Styling */
+    .table-metrics {
+        width: 100%;
+        margin-top: 15px;
+    }
+    .table-metrics th {
+        background-color: #f8f9fa;
+        color: #1e3c72;
+        font-weight: 600;
+        padding: 12px;
+        border: none;
+    }
+    .table-metrics td {
+        background-color: #fff;
+        color: #333;
+        padding: 12px;
+        font-weight: 500;
+    }
+    .table-metrics tr:nth-child(even) td {
+        background-color: #f1f1f1;
+    }
+    .metric-highlight {
+        color: #007bff; /* Secondary accent color for key metrics */
+        font-weight: 700;
+    }
+
+
+    /* 5. Image Styling */
+    img {
+        border-radius: 15px;
+        border: 5px solid #f8f9fa; 
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+        max-width: 100%;
+        height: auto;
+        transition: box-shadow 0.3s ease;
+    }
+
+    /* 6. Button Styling - Updated Gradients */
+    .btn {
+        font-weight: 700;
+        border-radius: 10px;
+        padding: 12px 25px;
+        margin: 8px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .btn-success {
+        /* Teal Gradient */
+        background: linear-gradient(90deg, #17a2b8 0%, #117a8b 100%); 
+        border: none;
+        color: #fff;
+    }
+
+    .btn-primary {
+        /* Primary Gold/Orange Gradient */
+        background: linear-gradient(90deg, #ffd700 0%, #ffaa00 100%); 
+        border: none;
+        color: #1e3c72; /* Dark text for light button */
+    }
+
+    .btn-secondary {
+        /* Dark Gray Gradient */
+        background: linear-gradient(90deg, #6c757d 0%, #495057 100%);
+        border: none;
+        color: #fff;
+    }
+
+    .btn:hover {
+        opacity: 1;
+        transform: scale(1.08) translateY(-2px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+        filter: brightness(1.1);
+    }
+    
+    /* Responsive Adjustments */
+    @media (max-width: 768px) {
+        .container { padding: 20px; margin-top: 30px; }
+        h2 { font-size: 1.8rem; letter-spacing: 1px; }
+        .metric-value { font-size: 3rem; }
+        .metric-label { font-size: 1rem; }
+        .card { padding: 20px; }
+    }
+</style>
+
+<div class="container mt-5">
+    <h2 class="text-center">🎯 Model Result: {{ algorithm|default:"Algorithm Name" }}</h2>
+
+    {% if accuracy %}
+    <div class="row justify-content-center">
+        <div class="col-lg-6 col-md-8">
+            <div class="accuracy-metric">
+                <p class="metric-label card-title-gold">Final Accuracy Score</p>
+                <p class="metric-value">{{ accuracy }}<span style="font-size: 3rem;">%</span></p>
+                <p class="mt-3" style="font-style: italic; opacity: 0.8;">Model performance is assessed.</p>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="card shadow mb-4">
+                <h4 class="text-center mb-4">Detailed Performance Metrics</h4>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-metrics">
+                        <thead>
+                            <tr>
+                                <th>Metric</th>
+                                <th>Value</th>
+                                <th>Target</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Precision</td>
+                                <td class="metric-highlight">0.938</td>
+                                <td>Minimize False Positives</td>
+                            </tr>
+                            <tr>
+                                <td>Recall (Sensitivity)</td>
+                                <td class="metric-highlight">0.951</td>
+                                <td>Minimize False Negatives</td>
+                            </tr>
+                            <tr>
+                                <td>F1-Score</td>
+                                <td class="metric-highlight">0.944</td>
+                                <td>Harmonic Mean of P & R</td>
+                            </tr>
+                            <tr>
+                                <td>Training Loss (MSE)</td>
+                                <td>0.1205</td>
+                                <td>Measure of Error</td>
+                            </tr>
+                           
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="card shadow text-center">
+                <h4 class="mb-4">Model Evaluation Graph</h4>
+                <img src="{{ graph_url }}" alt="Model Evaluation Graph" class="img-fluid" style="max-height: 500px;">
+                <p class="mt-4 text-muted">A visual representation of the model's performance on the dataset.</p>
+            </div>
+        </div>
+    </div>
+
+  
+
+</div>
+
+{% endblock %}

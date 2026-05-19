@@ -1,0 +1,284 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block contents %}
+
+<style>
+    /* --- CSS Variables for Theme Consistency --- */
+    :root {
+        --color-bg-deep: #0A1428;      /* Even Deeper Midnight Blue/Charcoal */
+        --color-card-surface: rgba(255, 255, 255, 0.08); /* Stronger Glass Surface */
+        --color-accent-gold: #FFD700;  /* Bright, rich Gold */
+        --color-border-subtle: rgba(255, 255, 255, 0.15); /* Slightly brighter border */
+        --color-text-light: #F0F4F8;   
+        --color-text-faded: rgba(240, 244, 248, 0.7);
+        --shadow-gold-glow-subtle: 0 0 10px rgba(255, 215, 0, 0.4);
+        --shadow-gold-glow-strong: 0 0 25px rgba(255, 215, 0, 0.8);
+        --shadow-deep: 0 15px 40px rgba(0, 0, 0, 0.8);
+    }
+    
+    /* --- Global & Layout Styling --- */
+    body {
+        font-family: 'Inter', sans-serif;
+        margin: 0;
+        min-height: 100vh;
+        /* Custom radial gradient for depth */
+        background-image: url("{% static 'depression.png'%}");
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        color: var(--color-text-light);
+        display: flex;
+        flex-direction: column;
+        transition: background-color 0.5s;
+
+    }
+
+    /* Ensure the main content div stretches correctly and centers the form and header block */
+    .login-wrapper {
+        flex-grow: 1; 
+        display: flex;
+        flex-direction: column; /* Stack header and card vertically */
+        justify-content: center;
+        align-items: center;
+        padding: 50px 20px;
+    }
+    
+    /* --- Project Context Header --- */
+    .project-header {
+        text-align: center;
+        margin-bottom: 40px;
+        max-width: 600px;
+        padding: 15px 25px;
+        border-bottom: 2px solid var(--color-accent-gold);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    }
+    .project-header h1 {
+        font-size: 2.6rem;
+        font-weight: 900;
+        color: var(--color-accent-gold);
+        text-shadow: var(--shadow-gold-glow-strong);
+        letter-spacing: 2px;
+        margin: 0;
+        margin-bottom: 5px; /* Added margin */
+        text-transform: uppercase;
+    }
+    
+    /* NEW SUBTITLE/TAGLINE STYLE */
+    .project-header .subtitle-tagline {
+        font-size: 1.4rem;
+        font-weight: 700;
+        color: #FFF; /* High contrast white */
+        margin: 0 auto 10px;
+        letter-spacing: 1px;
+        text-transform: none;
+        text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+    }
+
+    /* REFINED DESCRIPTION STYLE */
+    .project-header .project-description {
+        font-size: 1.0rem; /* Slightly smaller description */
+        font-weight: 400;
+        color: var(--color-text-faded);
+        margin: 0 auto;
+        line-height: 1.5;
+    }
+
+    /* --- The Login Card (Glassmorphism + Premium Shadow) --- */
+    .login-card {
+        max-width: 450px; 
+        width: 100%;
+        padding: 50px 40px;
+        background: var(--color-card-surface);
+        border-radius: 20px;
+        backdrop-filter: blur(15px); /* Increased blur */
+        -webkit-backdrop-filter: blur(15px);
+        border: 1px solid var(--color-border-subtle);
+        
+        /* Multi-layer shadow effect: Deep shadow, subtle gold border, inner glow */
+        box-shadow: 
+            var(--shadow-deep), 
+            0 0 5px var(--color-accent-gold) inset,
+            0 0 3px rgba(255, 215, 0, 0.2); 
+        transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    
+    .login-card:hover {
+        transform: translateY(-4px); /* More dramatic lift */
+        box-shadow: 
+            0 20px 50px rgba(0, 0, 0, 1), /* Deeper shadow on hover */
+            0 0 15px var(--color-accent-gold) inset,
+            0 0 10px var(--color-accent-gold); /* Prominent outer glow */
+    }
+
+    /* --- Typography & Title --- */
+    .card-title {
+        color: var(--color-accent-gold);
+        font-weight: 900;
+        font-size: 2.5rem; /* Larger title */
+        margin-bottom: 40px;
+        text-shadow: var(--shadow-gold-glow-strong); 
+        letter-spacing: 1.8px;
+        text-transform: uppercase;
+    }
+
+    /* --- Input Field Group --- */
+    .input-group-text {
+        background-color: rgba(255, 215, 0, 0.15) !important; /* Richer gold tint */
+        border: 1px solid rgba(255, 215, 0, 0.4) !important;
+        border-right: none !important;
+        color: var(--color-accent-gold);
+        padding: 15px 18px; /* Larger padding */
+        border-radius: 12px 0 0 12px;
+    }
+    
+    /* Input Styling for the Dark Theme */
+    .form-control-dark {
+        background-color: rgba(0, 0, 0, 0.4); 
+        border: 1px solid var(--color-border-subtle);
+        color: var(--color-text-light);
+        padding: 15px 20px; /* Larger padding */
+        height: auto;
+        border-radius: 0 12px 12px 0;
+        transition: border-color 0.4s, box-shadow 0.4s;
+        font-size: 1.1rem;
+    }
+
+    .form-control-dark::placeholder {
+        color: var(--color-text-faded);
+    }
+    
+    .form-control-dark:focus {
+        border-color: var(--color-accent-gold);
+        box-shadow: 0 0 0 0.2rem rgba(255, 215, 0, 0.5); /* Stronger gold focus ring */
+        background-color: rgba(0, 0, 0, 0.6);
+        outline: none;
+    }
+    
+    /* --- Button Styling --- */
+    .btn-gold {
+        background: linear-gradient(145deg, #FFE870, var(--color-accent-gold), #FFC700);
+        border: none;
+        color: var(--color-bg-deep); 
+        font-weight: 900;
+        letter-spacing: 2px;
+        padding: 16px 25px;
+        border-radius: 12px;
+        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        box-shadow: 0 10px 30px rgba(255, 215, 0, 0.6);
+    }
+
+    .btn-gold:hover {
+        background: linear-gradient(145deg, #FFF080, #FFD700, #FFCC10);
+        transform: translateY(-4px);
+        box-shadow: 0 15px 40px rgba(255, 215, 0, 0.8);
+    }
+    
+    .btn-outline-gold {
+        color: var(--color-accent-gold);
+        border: 2px solid var(--color-accent-gold);
+        background: transparent;
+        font-weight: 700;
+        padding: 16px 25px;
+        border-radius: 12px;
+        transition: all 0.3s;
+    }
+    
+    .btn-outline-gold:hover {
+        background-color: rgba(255, 215, 0, 0.15);
+        color: #FFFFFF;
+        border-color: #FFFFFF;
+        box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+    }
+    
+    /* --- Message & Links --- */
+    .alert-custom {
+        margin-top: 30px;
+        padding: 18px;
+        border-radius: 12px;
+        font-weight: 700;
+        text-align: center;
+        background-color: rgba(255, 215, 0, 0.1); 
+        border: 2px solid var(--color-accent-gold);
+        color: var(--color-accent-gold);
+        box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+    }
+    
+    .text-center a {
+        color: var(--color-accent-gold) !important; 
+        font-weight: 800;
+        text-decoration: none; /* Removed underline from default */
+        text-underline-offset: 4px;
+        transition: color 0.3s;
+    }
+    .text-center a:hover {
+        color: #FFFFFF !important;
+        text-decoration: underline; /* Added underline on hover */
+    }
+    
+    /* --- Responsive Adjustments --- */
+    @media (max-width: 500px) {
+        .login-card {
+            padding: 30px 20px;
+            margin: 10px;
+        }
+        .card-title {
+            font-size: 2rem;
+            margin-bottom: 30px;
+        }
+        .project-header h1 {
+            font-size: 1.8rem;
+        }
+        .project-header .subtitle-tagline {
+            font-size: 1.2rem;
+        }
+        .project-header .project-description {
+            font-size: 0.9rem;
+        }
+    }
+
+</style>
+
+<div class="login-wrapper">
+    
+    <!-- LOGIN CARD -->
+    <div class="login-card">
+        
+        <form action="{% url 'UserLoginCheck' %}" method="POST" class="needs-validation" novalidate>
+            {% csrf_token %}
+            
+            <div class="mb-4">
+                <label for="loginid" class="form-label visually-hidden">Login ID</label>
+                <div class="input-group input-group-lg">
+                    <span class="input-group-text">
+                        <i class="fas fa-user"></i>
+                    </span>
+                    <input type="text" class="form-control form-control-dark border-start-0" 
+                           id="loginid" name="loginid" required placeholder="Enter User ID or Email">
+                </div>
+            </div>
+            
+            <div class="mb-5">
+                <label for="pswd" class="form-label visually-hidden">Password</label>
+                <div class="input-group input-group-lg">
+                    <span class="input-group-text">
+                        <i class="fas fa-key"></i>
+                    </span>
+                    <input type="password" class="form-control form-control-dark border-start-0" 
+                           id="pswd" name="pswd" required placeholder="Enter Secure Password">
+                </div>
+            </div>
+            
+            <div class="d-grid gap-4">
+                <button class="btn btn-gold btn-lg" type="submit">
+                    <i class="fas fa-sign-in-alt me-2"></i> EXECUTE LOGIN
+                </button>
+                <button class="btn btn-outline-gold btn-lg" type="reset">
+                    <i class="fas fa-eraser me-2"></i> RESET FORM
+                </button>
+            </div>
+            
+        </form>
+    </div>
+</div>
+
+{% endblock %}

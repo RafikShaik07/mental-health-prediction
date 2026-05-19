@@ -1,0 +1,153 @@
+{% extends 'admins/adminbase.html' %}
+{% load static %}
+{% block contents %}
+
+<style>
+    body {
+        background: linear-gradient(135deg, rgba(90,125,159,0.9), rgba(142,176,121,0.9)), 
+                    url("{% static 'images/mental-health.jpg' %}") no-repeat center center/cover;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        font-family: 'Poppins', sans-serif;
+        
+    }
+
+    .upload-container {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(15px);
+        padding: 40px 50px;
+        border-radius: 20px;
+        text-align: center;
+        width: 90%;
+        max-width: 600px;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        animation: fadeIn 1s ease-in-out;
+        margin-left:300px;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(30px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .upload-container h2 {
+        color: #ffeb3b;
+        font-weight: 700;
+        text-shadow: 2px 2px 5px rgba(0,0,0,0.6);
+        margin-bottom: 30px;
+    }
+
+    .upload-container form {
+        background: rgba(255, 255, 255, 0.15);
+        border: 2px dashed rgba(255, 255, 255, 0.4);
+        padding: 30px 20px;
+        border-radius: 15px;
+        transition: all 0.3s ease-in-out;
+    }
+
+    .upload-container form:hover {
+        background: rgba(255, 255, 255, 0.25);
+        border-color: #ffd700;
+    }
+
+    input[type="file"] {
+        background: rgba(255,255,255,0.95);
+        border: none;
+        border-radius: 10px;
+        padding: 12px;
+        width: 100%;
+        margin-bottom: 20px;
+        font-weight: 600;
+        color: #333;
+        box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
+    }
+
+    input[type="file"]::file-selector-button {
+        background: linear-gradient(90deg, #5a7d9f, #8eb079);
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        padding: 10px 15px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: 0.3s;
+    }
+
+    input[type="file"]::file-selector-button:hover {
+        background: linear-gradient(90deg, #4e6c98, #739d61);
+        transform: scale(1.05);
+    }
+
+    .btn-success {
+        background: linear-gradient(90deg, #28a745, #1e7e34);
+        border: none;
+        color: #fff;
+        font-size: 1.1rem;
+        font-weight: 700;
+        padding: 12px 30px;
+        border-radius: 12px;
+        transition: 0.3s ease-in-out;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+
+    .btn-success:hover {
+        background: linear-gradient(90deg, #34d058, #208d3a);
+        transform: scale(1.07);
+        box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+    }
+
+    .note-text {
+        font-size: 1rem;
+        margin-top: 25px;
+        color: #ffebcd;
+        font-weight: 500;
+        text-shadow: 1px 1px 3px rgba(0,0,0,0.6);
+        letter-spacing: 0.5px;
+    }
+
+    .algo-icon {
+        font-size: 50px;
+        color: #ffd700;
+        margin-bottom: 10px;
+        animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+        0%, 100% { transform: scale(1); opacity: 1; }
+        50% { transform: scale(1.1); opacity: 0.8; }
+    }
+</style>
+
+<div class="upload-container">
+    <i class="fas fa-cloud-upload-alt algo-icon"></i>
+
+    <h2>
+        Upload Dataset for 
+        {% if algorithm == 'LR' %}
+            Logistic Regression
+        {% elif algorithm == 'RF' %}
+            Random Forest
+        {% elif algorithm == 'KNN' %}
+            K-Nearest Neighbors
+        {% elif algorithm == 'SVM' %}
+            Support Vector Machine
+        {% endif %}
+    </h2>
+
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="file" name="dataset" accept=".csv" required>
+        <button type="submit" class="btn btn-success">📤 Upload & Train</button>
+    </form>
+
+    <p class="note-text">
+        Please upload your dataset before training the 
+        {% if algorithm == 'LR' %}Logistic Regression{% elif algorithm == 'RF' %}Random Forest{% elif algorithm == 'KNN' %}KNN{% elif algorithm == 'SVM' %}SVM{% endif %} 
+        model.
+    </p>
+</div>
+
+{% endblock %}
