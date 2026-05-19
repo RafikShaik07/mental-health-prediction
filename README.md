@@ -1,10 +1,12 @@
 <!-- HEADER -->
-<h1 align="center">🧠 Mental Health Disorder Prediction System</h1>
+# 🧠 Mental Health Disorder Prediction System
 
 <p align="center">
-  <b>🚀 AI-Powered Mental Health Analysis & Prediction Platform</b><br>
-  <i>Leveraging Machine Learning to Support Mental Health Awareness</i>
+  <img src="https://img.shields.io/badge/Python-Project-blue?style=for-the-badge&logo=python">
+  <img src="https://img.shields.io/badge/Machine%20Learning-Enabled-success?style=for-the-badge">
+  <img src="https://img.shields.io/badge/Status-Completed-brightgreen?style=for-the-badge">
 </p>
+
 
 <p align="center">
   <a href="https://github.com/RafikShaik07/mental-health-prediction">
