@@ -1,86 +1,102 @@
 # 🧠 Mental Health Disorder Prediction System
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Python-Project-blue?style=for-the-badge&logo=python">
-  <img src="https://img.shields.io/badge/Machine%20Learning-Enabled-success?style=for-the-badge">
+  <img src="https://img.shields.io/badge/Python-3.9-blue?style=for-the-badge&logo=python">
+  <img src="https://img.shields.io/badge/Machine%20Learning-Project-success?style=for-the-badge">
   <img src="https://img.shields.io/badge/Status-Completed-brightgreen?style=for-the-badge">
 </p>
 
 ---
 
-## 📌 Project Overview
-This project focuses on predicting mental health disorders using Machine Learning algorithms.  
-It analyzes patterns in mental health data and provides predictions to assist in early detection.
+## 📌 Overview
+
+The **Mental Health Disorder Prediction System** is a Machine Learning-based project designed to analyze mental health data and predict potential disorders.  
+
+This project leverages multiple algorithms to improve prediction accuracy and provides insights through data visualization.
 
 ---
 
-## 🎯 Objectives
-- Predict mental health conditions using ML models  
-- Compare performance of different algorithms  
-- Improve awareness through data-driven insights  
+## 🚀 Key Features
+
+- 🔍 Data preprocessing and cleaning  
+- 🤖 Multiple ML models implementation  
+- 📊 Data visualization using graphs  
+- ⚖️ Model comparison for accuracy  
+- 📈 Insightful predictions  
 
 ---
 
-## 🧠 Algorithms Used
-- 🔹 LSTM (Long Short-Term Memory)
-- 🔹 SVM (Support Vector Machine)
-- 🔹 KNN (K-Nearest Neighbors)
+## 🧠 Machine Learning Models Used
+
+| Algorithm | Purpose |
+|----------|--------|
+| LSTM | Deep learning for sequential data |
+| SVM | Classification |
+| KNN | Pattern recognition |
 
 ---
 
 ## 🛠️ Tech Stack
-- **Language:** Python 🐍  
-- **Libraries:**  
-  - Pandas  
-  - NumPy  
-  - Matplotlib  
-  - Scikit-learn  
-- **Concepts:** Machine Learning, Data Analysis  
+
+**Programming Language**
+- Python 🐍  
+
+**Libraries & Tools**
+- Pandas  
+- NumPy  
+- Matplotlib  
+- Scikit-learn  
 
 ---
 
-## 📊 Features
-- Data preprocessing and cleaning  
-- Model training and evaluation  
-- Visualization of results  
-- Comparison of multiple ML algorithms  
+## 📂 Project Structure
+
+```
+mental-health-prediction/
+│── data/
+│── models/
+│── notebooks/
+│── templates/
+│── static/
+│── manage.py
+│── requirements.txt
+│── README.md
+```
 
 ---
 
-## 🚀 How to Run the Project
+## ⚙️ Installation & Setup
 
 ```bash
 # Clone the repository
-git clone https://github.com/your-username/your-repo-name.git
+git clone https://github.com/RafikShaik07/mental-health-prediction.git
 
 # Navigate into project folder
-cd your-repo-name
+cd mental-health-prediction
 
 # Install dependencies
 pip install -r requirements.txt
 
 # Run the project
-python main.py
+python manage.py runserver
 ```
 
 ---
 
-## 📁 Project Structure
-```
-├── data/
-├── models/
-├── notebooks/
-├── main.py
-├── requirements.txt
-└── README.md
-```
+## 📊 Output & Results
+
+- Model performance comparison  
+- Graphical representation of predictions  
+- Accuracy evaluation of algorithms  
 
 ---
 
-## 📈 Future Improvements
-- Add Deep Learning optimization  
-- Improve dataset accuracy  
-- Deploy as a web application  
+## 🔮 Future Enhancements
+
+- 🌐 Deploy as a web application  
+- 🧠 Improve deep learning models  
+- 📊 Use larger datasets  
+- 📱 Create user-friendly interface  
 
 ---
 
@@ -93,4 +109,11 @@ python main.py
 ---
 
 ## ⭐ Support
-If you like this project, give it a ⭐ on GitHub!
+
+If you found this project helpful, please give it a ⭐ on GitHub!
+
+---
+
+## 📬 Contact
+
+Feel free to connect with me on LinkedIn for collaboration or opportunities.
